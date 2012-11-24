@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7-4 JSONを使う</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script>
+var reqNumber = 0;
+
+function getJSON() {
+  var url = '/api/get_json';
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      var result = JSON.parse(xhr.responseText);
+      console.info(result);
+    }
+  }
+  xhr.send(null);
+}
+
+function getJSON_jQuery() {
+  var url = '/api/get_json';
+  $.ajax({
+    type: 'GET',
+    url: url
+  }).always(function(ret) {
+    console.info(ret);
+  });
+}
+
+function sendJSON() {
+  var url = '/api/give_me_json';
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      var ret = JSON.parse(xhr.responseText);
+      console.info(ret);
+      // {
+      //   status: 'success',
+      //   result: {
+      //     id: 100,
+      //     name: 'hagino3000',
+      //     address: {
+      //       country: 'Japan',
+      //       city: 'Tokyo'
+      //     },
+      //     created: '2012-10-21T19:16:20'
+      //   }
+      // }
+    }
+  }
+  // 送信データの準備
+  xhr.setRequestHeader('Content-type', 'application/json'); 
+  // リクエストボディをJSONとする
+  xhr.send(JSON.stringify({
+    name: 'hagino3000',
+    address: { country: 'Japan', city: 'Tokyo' }
+  }));
+}
+
+function sendJSON_jQuery() {
+  var url = '/api/give_me_json';
+  $.ajax({
+    type: 'POST',
+    url: url,
+    contentType : 'application/json',
+    data: JSON.stringify({
+      name: 'hagino3000',
+      address: {
+        country: 'Japan',
+        city: 'Tokyo'
+      }
+    })
+  }).always(function(ret) {
+    console.info(ret.status); // => success
+  });
+}
+
+</script>
+</head>
+<body>
+  <h1>7-4 JSONの使って構造化データのやりとりをする</h1>
+  <h2>結果はコンソールに表示されます</h2>
+
+  <div>
+  JSONの受信<br>
+  <input type="button" onclick="getJSON()" value="getJSON" /><br>
+  <input type="button" onclick="getJSON_jQuery()" value="getJSON by jQuery" /><br>
+  </div>
+  <br>
+  <div>
+  JSONの送信<br>
+  <input type="button" onclick="sendJSON()" value="sendJSON" /><br>
+  <input type="button" onclick="sendJSON_jQuery()" value="sendJSON by jQuery" /><br>
+  </div>
+
+</html>

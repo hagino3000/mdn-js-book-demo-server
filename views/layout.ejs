@@ -1,0 +1,86 @@
+<% if (allPage) { %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<style>
+body {
+  margin:0;padding:0;
+}
+header {
+  padding: 10px;
+  
+}
+footer {
+  height: 50px;
+background: #000;
+color: #FFF;
+  padding: 10px;
+}
+.main {
+padding: 10px;
+}
+</style>
+
+<script>
+// リンククリック時の動作を変更する
+$('ul.menu a').live('click', function(ev) {
+  // (1) デフォルトの動作をキャンセルする
+  ev.preventDefault();
+  // (2) ロケーションの変更
+  var nextUrl = $(this).attr('href');
+  history.pushState(null, null, nextUrl);
+  // (3) 画面の更新
+  $.ajax({
+    url: nextUrl,
+    headers: {
+      'X-PJAX': true
+    }
+  }).done(function(ret) {
+    $('.main').html(ret);
+  });
+});
+
+// 履歴スタックがpopした時フック
+$(window).on('popstate', function(ev) {
+  console.log(ev);
+  // (1) 画面の更新
+  $.ajax({
+    url: location.pathname,
+    headers: {
+      'X-PJAX': true
+    }
+  }).done(function(ret) {
+    $('.main').html(ret);
+  });
+});
+</script>
+
+  </head>
+  <body>
+  <header>
+  PJAX Sample Pages<br>
+  <ul class="menu">
+    <li><a href="/pages/page1">Page1</a></li>
+    <li><a href="/pages/page2">Page2</a></li>
+    <li><a href="/pages/page3">Page3</a></li>
+  </ul>
+<input type="text" value="000">
+  </header>
+
+<% } %>
+
+  <div class="main" style="width:500px">
+  <%- body %>
+  </div>
+
+<% if (allPage) { %>
+
+  <footer>
+  PJAX Sample Footer
+  </footer>
+  </body>
+</html>
+<% } %>

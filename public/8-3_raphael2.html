@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Raphael Sample 2</title>
+
+<!-- Raphael.jsのロード -->
+<script src="./thirdparty/raphael-min.js"></script>
+<!-- jq -->
+<script src="./thirdparty/jquery-1.8.3.min.js"></script>
+
+</head>
+<body style="margin:0; padding:0">
+
+<!-- Raphael用の描画コンテナ -->
+<div id="container" style="height:300px; width:400px"></div>
+
+<!-- SVGファイルのロードとpathの描画 -->
+<script>
+// XMLHttpReqeustでSVGファイルを取得する
+$.get('./smile.svg').done(function(svg) {
+  // pathを全て取得
+  var paths = svg.getElementsByTagName('path');
+
+  // pathを結合
+  var joined = '';
+  for (var i = 0; i < paths.length; i++) {
+    joined += paths[i].getAttribute('d');
+    joined += ' ';
+  }
+
+  var paper = Raphael('container');
+
+  // 結合したpathをRaphaelに渡す
+  paper.path(joined)
+       .translate(80, 80)
+       .scale(5, 5)
+       .attr({fill: '#333'});
+});
+</script>
+
+</body>
+</html>

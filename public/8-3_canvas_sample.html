@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Canvas API Sample 2</title>
+<style>
+  body {
+    margin: 0; padding: 0;
+  }
+  canvas {
+    margin: 0; 
+    padding: 0;
+    height: 400px;
+    width: 500px;
+    float left;
+  }
+</style>
+</head>
+<body>
+<canvas id="sample1" width="1000" height="800"></canvas>
+<script>
+(function() {
+
+  var c = document.getElementById('sample1');
+  var rect = c.getBoundingClientRect();
+
+  var circles = [];
+
+  var color = 0;
+
+  c.addEventListener('mousemove', function(e) {
+    var y = e.y - rect.top + 1;
+    var x = e.x - rect.left + 1;
+    circles.push({
+      x: x,
+      y: y,
+      size: 1,
+      color: 'hsl(' + (color+=10 % 360) + ', 70%, 40%)',
+      live: true
+    });
+  });
+
+  var ctx = c.getContext('2d');
+  ctx.scale(2, 2);
+  //ctx.globalCompositeOperation = "source-over";
+  ctx.globalCompositeOperation = "lighter";
+
+  function tick() {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = "rgba(255,255,255,0.2)";
+    ctx.fillRect(0, 0, 1000, 800);
+    ctx.globalCompositeOperation = "copy";
+
+
+    var c;
+    for(var i=0; i<circles.length; i++) {
+      c = circles[i];
+      if (c.live === false) continue;
+
+      c.size++;
+      if (c.size > 240) {
+        c.live = false;
+      } else {
+        ctx.beginPath();
+        ctx.strokeStyle = c.color;
+        ctx.arc(c.x, c.y, c.size, 0, Math.PI*2, false);
+        ctx.stroke();
+      }
+    }
+  }
+
+  var timer = 0;
+
+  timer = setInterval(tick, 1000/60);
+
+  c.addEventListener('click', function() {
+    if (timer) {
+      clearInterval(timer);
+      timer = 0;
+    } else {
+      timer = setInterval(tick, 1000/60);
+    }
+  });
+
+})();
+
+</script>
+</body>
+</html>

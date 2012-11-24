@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7-2 XMLHttpRequestの基本</title>
+<script>
+var reqNumber = 0;
+
+function startXHR() {
+  var count = ++reqNumber;
+  var url = '/api/get_server_time';
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      out('#' + count + '<=Returns ' + xhr.responseText);
+    }
+  }
+  xhr.send(null);
+  out('#' + count + '=>' + 'Send');
+}
+function out(ret) {
+  var line = document.createElement('div');
+  line.textContent = ret;
+  var target = document.getElementById('result');
+  target.appendChild(line);
+}
+</script>
+</head>
+<body>
+<input type="button" onclick="startXHR()" value="リクエスト送信" />
+<div id="result"></div>
+</html>

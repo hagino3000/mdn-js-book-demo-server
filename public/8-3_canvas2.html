@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Canvas API Sample 2</title>
+<style>
+  canvas {
+    margin: 10px;
+    height: 200px;
+    width: 200px;
+    float: true;
+    float left;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="sample1" width="400" height="400"></canvas>
+<canvas id="sample2" width="400" height="400"></canvas>
+<canvas id="sample3" width="400" height="400"></canvas>
+<canvas id="sample4" width="400" height="400"></canvas>
+<canvas id="sample5" width="400" height="400"></canvas>
+<canvas id="sample6" width="400" height="400"></canvas>
+<canvas id="sample7" width="400" height="400"></canvas>
+<canvas id="sample8" width="400" height="400"></canvas>
+
+<script>
+(function() {
+  var c = document.getElementById('sample2');
+  var ctx = c.getContext('2d');
+  ctx.scale(2, 2);
+
+  // パスの描画
+  ctx.beginPath();
+  ctx.moveTo(50, 50);
+  ctx.lineTo(150, 50);
+  ctx.lineTo(150, 150);
+  ctx.lineTo(50, 150);
+  ctx.lineTo(100, 100);
+  ctx.closePath();
+  ctx.stroke();
+
+})();
+
+(function() {
+  var c = document.getElementById('sample3');
+  var ctx = c.getContext('2d');
+  ctx.scale(2, 2);
+
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = '#777';
+  ctx.beginPath();
+  ctx.moveTo(0, 50);
+  ctx.lineTo(150, 50);
+  ctx.stroke();
+
+  ctx.lineWidth = 15;
+  ctx.strokeStyle = 'rgb(0,255,255)';
+  ctx.beginPath();
+  ctx.moveTo(0, 90);
+  ctx.lineTo(150, 90);
+  ctx.stroke();
+
+  ctx.lineWidth = 30;
+  ctx.strokeStyle = 'rgba(255, 192, 203, 0.9)';
+  ctx.beginPath();
+  ctx.moveTo(0, 150);
+  ctx.lineTo(150, 150);
+  ctx.stroke();
+
+})();
+
+(function() {
+  var c = document.getElementById('sample4');
+  var ctx = c.getContext('2d');
+  ctx.scale(2, 2);
+
+  ctx.lineWidth = 20;
+
+  ctx.lineCap = 'butt';
+  ctx.beginPath();
+  ctx.moveTo(10, 50);
+  ctx.lineTo(150, 50);
+  ctx.stroke();
+
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(10, 100);
+  ctx.lineTo(150, 100);
+  ctx.stroke();
+
+  ctx.lineCap = 'square';
+  ctx.beginPath();
+  ctx.moveTo(10, 150);
+  ctx.lineTo(150, 150);
+  ctx.stroke();
+
+
+})();
+
+(function() {
+  var c = document.getElementById('sample5');
+  var ctx = c.getContext('2d');
+  ctx.scale(2, 2);
+
+  ctx.lineWidth = 15;
+
+  ctx.lineJoin = 'miter';
+  ctx.beginPath();
+  ctx.moveTo(20, 50);
+  ctx.lineTo(20, 180);
+  ctx.lineTo(60, 180);
+  ctx.closePath();
+  ctx.stroke();
+
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  ctx.moveTo(80, 50);
+  ctx.lineTo(80, 180);
+  ctx.lineTo(120, 180);
+  ctx.closePath();
+  ctx.stroke();
+
+  ctx.lineJoin = 'bevel';
+  ctx.beginPath();
+  ctx.moveTo(140, 50);
+  ctx.lineTo(140, 180);
+  ctx.lineTo(180, 180);
+  ctx.closePath();
+  ctx.stroke();
+
+
+})();
+(function() {
+  var c = document.getElementById('sample6');
+  var ctx = c.getContext('2d');
+  ctx.scale(2, 2);
+  ctx.fillStyle = '#777';
+
+
+  ctx.beginPath();
+  ctx.arc(100, 100, 50, 0, Math.PI*2.0);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(115, 115, 70, Math.PI, Math.PI*1.5, true);
+  ctx.fill();
+
+
+})();
+
+try {
+
+(function() {
+  var c = document.getElementById('sample7');
+  var ctx = c.getContext('2d');
+  ctx.scale(2, 2);
+
+  ctx.textAlight = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = '40px serif';
+  ctx.fillStyle = '#FF00FF';
+  ctx.fillText('Hello MDN', 0, 100);
+})();
+
+} catch(e) {console.info(e);}
+
+(function() {
+  var c = document.getElementById('sample1');
+  var ctx = c.getContext('2d');
+  ctx.scale(2, 2);
+
+  ctx.globalCompositeOperation = "source-over";
+
+  // 矩形で塗り潰し
+  // fillRectの引数は領域の指定(x, y, width, height)
+  ctx.fillStyle = "rgb(100,100,100)";
+  ctx.fillRect(0, 0, 200, 200);
+
+  // 矩形の描画
+  ctx.strokeStyle = 'rgb(0,0,255)';
+  ctx.lineWidth = 20;
+  ctx.strokeRect(80, 80, 100, 100);
+
+  // 矩形で色のクリア
+  ctx.clearRect(40, 40, 80, 80);
+
+})();
+</script>
+</body>
+</html>

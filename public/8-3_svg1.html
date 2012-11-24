@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SVG Sample</title>
+</head>
+<body>
+  <!-- Inline SVG を定義 -->
+  <svg width="400" height="300">
+
+  <!-- 文字の描画 -->
+  <text x="15" y="60" font-size="42" fill="#777" font-family="arial">
+  Hello SVG Sample
+  </text>
+
+  <!-- スタイル指定のためのグループ化 -->
+  <g stroke-width="10">
+
+    <!-- 四角形の描画 -->
+    <rect 
+      x="80" y="90" 
+      width="100" height="100" 
+      fill="#ffa2c7" 
+      stroke="#cc82a7" 
+      transform="rotate(45, 100, 100)" />
+
+    <!-- 円の描画 -->
+    <circle 
+      cx="280" cy="150" 
+      r="70" 
+      stroke="#a70" 
+      fill="#fc0" />
+
+    <!-- 線の描画 -->
+    <line 
+      x1="10" y1="270" 
+      x2="375" y2="270" 
+      stroke="#777" />
+
+    <!-- 線の描画 (装飾あり)-->
+    <line 
+      x1="10" y1="240" 
+      x2="375" y2="240" 
+      stroke="#777" 
+      stroke-dasharray="12"/>
+
+  </g>
+  </svg>
+</body>
+</html>

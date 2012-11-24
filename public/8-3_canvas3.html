@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Canvas API Sample 2</title>
+<style>
+  canvas {
+    margin: 5px;
+    float: true;
+    float left;
+    border: 1px solid #777;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="sample1" width="200" height="200"></canvas>
+
+<script>
+(function() {
+  var c = document.getElementById('sample1');
+  var ctx = c.getContext('2d');
+
+  // 図形の描画
+  var r = 100;
+  for (var i=0; i<10; i++) {
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgb(255,50,50)';
+    ctx.beginPath();
+    ctx.arc(100, 100, r-=4, 0, Math.PI*2.0, true);
+    ctx.stroke();
+
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgb(50,50,255)';
+    ctx.beginPath();
+    ctx.arc(100, 100, r-=4, 0, Math.PI*2.0, true);
+    ctx.stroke();
+  }
+
+})();
+
+(function() {
+
+  /**
+   * Canvas要素を作成する。
+   *
+   * @param width {Number} 見た目のサイズ(CSS単位のpx)
+   * @param height {Number} 見た目のサイズ(CSS単位のpx)
+   * @return CanvasElement
+   */
+  function createCanvas(width, height) {
+    // デバイスのピクセル密度を取得
+    var pixelRatio = window.devicePixelRatio || 1;
+
+    // Canvas要素の作成
+    var c = document.createElement('canvas');
+
+    // Canvasのサイズは実際に描画に使われるピクセル数とする
+    c.setAttribute('width', width * pixelRatio);
+    c.setAttribute('height', height * pixelRatio);
+
+    // 見た目のサイズはCSSでセット
+    c.style.width = width + 'px';
+    c.style.height = height + 'px';
+
+    return c;
+  }
+
+  var canvas = createCanvas(200, 200);
+  document.body.appendChild(canvas);
+  
+  var ctx = canvas.getContext('2d');
+
+  // 以降の図形描画について、ピクセル密度だけ引き伸ばす
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+  // 図形の描画
+  var r = 100;
+  for (var i=0; i<10; i++) {
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgb(255,50,50)';
+    ctx.beginPath();
+    ctx.arc(100, 100, r-=4, 0, Math.PI*2.0, true);
+    ctx.stroke();
+
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgb(50,50,255)';
+    ctx.beginPath();
+    ctx.arc(100, 100, r-=4, 0, Math.PI*2.0, true);
+    ctx.stroke();
+  }
+})();
+
+</script>
+</body>
+</html>

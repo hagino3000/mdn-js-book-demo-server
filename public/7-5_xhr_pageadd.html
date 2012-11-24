@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7-5 コンテンツの継ぎ足しを行なう</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script>
+$(function() {
+
+  // 現在のスクロール位置から画面終りまでの距離を求める関数
+  function calcScrollLeft() {
+    var windowHeight = $(window).height(),
+        pageHeight = $(document).height(),
+        scrollOffset = $(document).scrollTop();
+
+    return pageHeight - (scrollOffset + windowHeight);
+  }
+
+  // スクロール位置を定期的にチェックする関数
+  var timer;
+  function startCheckTimer() {
+    timer = setInterval(function scrollCheck() {
+      // 次のコンテンツをロード開始する閾値(pixel)
+      // スクロール残りが200pxになったら次をロードする
+      var triggerMargin = 200;
+      if (triggerMargin > calcScrollLeft()) {
+        stopCheckTimer();
+        pageAdd(startCheckTimer);
+      }
+    }, 500);
+  }
+
+  // スクロール位置の監視を止める関数
+  function stopCheckTimer() {
+    clearInterval(timer);
+  }
+  
+  // コンテンツの継ぎ足しを行なう関数
+  function pageAdd(callback) {
+
+    //(1) 次にロードするコンテンツのURLを取得
+    var nextPage = $('.page :last').data('next-contents');
+
+    //(2) 次のロードすべきコンテンツが存在した場合
+    //    コンテンツを取得する
+    nextPage && $.get(nextPage, function(html) {
+     // (3) 取得したHTMLを次の兄弟要素として挿入する
+     $('.page :last').after(html);
+     callback();
+    });
+  }
+
+  // スクロール位置の監視をスタート
+  startCheckTimer();
+});
+</script>
+</head>
+<body>
+
+<div class="wrapper">
+<header>コンテンツの追加ロードサンプル</header>
+
+
+<nav>
+Navigations
+</nav>
+
+<div class="contents">
+
+<div class="page" data-next-contents="./comments.html">
+<h1>Lorem ipsum dolor sit amet</h1>
+
+<div style="width:400px">
+
+<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+
+
+<ul>
+   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+   <li>Aliquam tincidunt mauris eu risus.</li>
+   <li>Vestibulum auctor dapibus neque.</li>
+</ul>
+
+<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+
+</div>
+</div><!-- end .page -->
+</div><!-- end .contents -->
+
+<footer>This is footer</footer>
+
+</div><!-- end .wrapper -->
+
+</body>
+</html>

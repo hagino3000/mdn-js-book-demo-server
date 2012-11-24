@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Canvas API Sample filter</title>
+<style>
+  canvas {
+    margin: 5px;
+    float: true;
+    float left;
+    border: 1px solid #777;
+  }
+</style>
+</head>
+<body>
+
+<script>
+
+(function() {
+
+  /**
+   * 指定した大きさのCanvasを作成する
+   *
+   * canvas要素のwidth, heightはデバイスのピクセル密度に応じて調節する。
+   *
+   */
+  function createCanvas(width, height) {
+    // デバイスのピクセル密度を取得
+    var pixelRatio = window.devicePixelRatio || 1;
+
+    // Canvas要素の作成
+    var c = document.createElement('canvas');
+
+    // Canvasのサイズは実際に描画に使われるピクセル数とする
+    c.setAttribute('width', width * pixelRatio);
+    c.setAttribute('height', height * pixelRatio);
+
+    // スタイルのサイズはCSS単位でセット
+    c.style.width = width + 'px';
+    c.style.height = height + 'px';
+
+    return c;
+  }
+
+  var canvas = createCanvas(640, 480);
+  document.body.appendChild(canvas);
+  
+  var ctx = canvas.getContext('2d');
+
+  // 画像をCanvasに読み込む
+  var img = new Image();
+  img.src = './neko.png';
+  img.onload = function() {
+    var imgW = img.naturalWidth;
+    var imgH = img.naturalHeight;
+    ctx.drawImage(img, 0, 0, imgW, imgH, 0, 0, 
+                  canvas.width, canvas.height);
+
+    // グレースケール適用関数を呼び出す
+    applyGrayScale(ctx);
+  }
+
+  /**
+   * 描画コンテキスト全体に対してグレースケールフィルタをかける
+   *
+   */
+  function applyGrayScale(ctx) {
+    var imageData = ctx.getImageData(0, 0, 
+            ctx.canvas.width, ctx.canvas.height),
+        size = imageData.data.length;
+        pixels = imageData.data;
+
+    // 全てのピクセルに対して処理を行なう
+    var r, g, b, gray;
+    for (var i = 0; i < size; i+=4) {
+      r = pixels[i];
+      g = pixels[i+1];
+      b = pixels[i+2];
+
+      // グレースケール化
+      gray = Math.floor((r*77 + g*28 + b*151)/255);
+
+      pixels[i] = gray;
+      pixels[i+1] = gray;
+      pixels[i+2] = gray;
+    }
+    // 更新したImageDataオブジェクトをセットする
+    ctx.putImageData(imageData, 0, 0);
+  }
+
+})();
+
+</script>
+</body>
+</html>

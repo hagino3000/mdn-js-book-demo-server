@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="./thirdparty/jquery-1.8.3.min.js"></script>
+<script src="./thirdparty/modernizr.custom.24734.js"></script>
+<script>
+Modernizr.load({
+  test: Modernizr.file,
+  nope: function() {
+    alert('No file API !!');
+  },
+  // 完了後に呼ばれる
+  complete: function() {
+    // do something
+  }
+});
+
+</script>
+<title>File Upload</title>
+<style>
+  h1 {
+    margin:20px;
+    height: 50px;
+  }
+
+  #droptarget {
+    height: 30px;
+    padding: 20px;
+    border: 3px solid #777;
+    border-radius: 10px;
+    z-index: 10;
+    position: absolute;
+    top: 10px; left: 10px;
+    width: -webkit-calc(100% - 70px);
+    width: calc(100% - 70px);
+  }
+
+  .dragover {
+    border: 3px dashed #777 !important;
+    background-color: rgba(200, 200, 200, 0.5);
+  }
+
+  #dropped_images img {
+    float: left;
+    height: 150px;
+    margin: 10px 10px 10px 0px;
+
+  }
+
+</style>
+</head>
+<body>
+
+<h1>Drop here some images</h1>
+<div id="droptarget">
+</div>
+
+<script>
+jQuery.event.props.push("dataTransfer");
+
+$('#droptarget')
+.on('dragover', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.dataTransfer.dropEffect = 'copy';
+})
+.on('dragenter', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  $(this).addClass('dragover');
+})
+.on('dragleave', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  $(this).removeClass('dragover');
+})
+.on('drop', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  $(this).removeClass('dragover');
+
+  var files = e.dataTransfer.files;
+
+  for (var i=0; i<files.length; i++) {
+    upload(files[i]);
+  }
+});
+
+function upload(file) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/upload");
+    xhr.setRequestHeader("Cache-Control", "no-cache");
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("X-File-Name", file.name);
+
+    xhr.upload.onprogress = function(e) {
+      console.log(e.loaded + '/' + e.total);
+    }
+    xhr.upload.onload = function() {
+      console.log('Finished');
+    };
+    xhr.send(file);
+}
+  
+</script>
+
+
+</body>
+</html>

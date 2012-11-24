@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Raphael Sample</title>
+
+<!-- Raphael.jsのロード -->
+<script src="./thirdparty/raphael-min.js"></script>
+<script>
+// Raphaelに渡した関数はDOMツリー構築後に実行される
+Raphael(function() {
+
+  var paper = Raphael('container');
+
+  // rect
+  paper.rect(0, 0, 400, 300).attr({
+    fill: '#EDC',
+    stroke: 'none'
+  });
+
+  // circle
+  for (var i = 0; i < 20; i++) {
+    paper.circle(200, 150, 20).attr({
+      fill: '#045',
+      stroke: '#034'
+    }).mouseover(function(r) {
+      this.attr({fill: '#389', r: 30});
+    }).mouseout(function(r) {
+      this.attr({fill: '#045', r: 20});
+    }).rotate(i*20).translate(130, 0);
+  }
+
+  // text
+  paper.text(200, 150, "Hello Raphael").attr({
+    fill: '#444',
+    'font-size': 30,
+    'font-family': 'vardana'
+  });
+});
+</script>
+
+</head>
+<body style="margin:0; padding:0">
+<!-- Raphael用の描画コンテナ -->
+<div id="container" style="height:300px; width:400px"></div>
+</body>
+</html>

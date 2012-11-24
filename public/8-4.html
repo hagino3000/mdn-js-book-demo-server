@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="./thirdparty/jquery-1.8.3.min.js"></script>
+<script src="./thirdparty/modernizr.custom.24734.js"></script>
+<script>
+Modernizr.load({
+  test: Modernizr.draganddrop,
+  nope: function() {
+    alert('No draganddrop !!');
+  },
+  // 完了後に呼ばれる
+  complete: function() {
+    // do something
+  }
+});
+
+</script>
+<title>Drag and Drop</title>
+<style>
+
+  div {
+    font-size: 30px;
+  }
+
+  #dragsource {
+    width: 180px;
+    height: 180px;
+    border: 3px solid #000;
+    margin: 20px;
+    padding: 10px;
+    float: left;
+    cursor: move;
+  }
+
+  #droptarget {
+    width: 250px;
+    height: 250px;
+    border: 3px solid #777;
+    margin: 10px;
+    padding: 10px;
+    float: left;
+  }
+
+  #droptarget > div {
+    border: 3px solid #000;
+    width: 180px; height:180px;
+    margin: 10px;
+    padding: 10px;
+    background-color:#FFF;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Dropエリア -->
+  <div id="droptarget">Drop here</div>
+
+  <!-- Drag要素 -->
+  <div id="dragsource" draggable="true">
+    <div>Drag Me</div>
+  </div>
+
+
+  <script>
+    jQuery.event.props.push("dataTransfer");
+
+    $(function() {
+
+      /* ドラッグソースのイベント ***************************/
+      $('#dragsource')
+      .on('dragstart', function(e) {
+        // Drop先へ渡すデータのセット
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', $(this).html());
+      })
+      .on('dragend', function(e) {
+        $(this).remove();
+      });
+
+      /* ドロップターゲットのイベント ************************/
+      $('#droptarget')
+      .on('dragover', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      })
+      .on('dragleave', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).css('backgroundColor','transparent');
+      })
+      .on('dragenter', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).css('backgroundColor','#CCC');
+      })
+      .on('drop', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Drag元でセットしたデータの受け取り
+        var data = e.dataTransfer.getData('text/html');
+        $(this).append($('<div>').html(data));
+        return false;
+      });
+    });
+
+  </script>
+</body>
+</html>

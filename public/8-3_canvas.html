@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Canvas API Sample 1</title>
+</head>
+<body>
+
+<canvas width="400" height="300"></canvas>
+
+<script>
+
+(function() {
+  // Canvas要素の取得
+  var c = document.getElementsByTagName('canvas')[0];
+
+  // 2Dコンテキストの取得
+  var ctx = c.getContext('2d');
+
+  // 上書き設定
+  ctx.globalCompositeOperation = "source-over";
+
+  // 背景の塗り潰し
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.fillRect(0, 0, 400, 300);
+
+  // 円の描画
+  ctx.fillStyle = 'rgb(255,50,50)';
+  ctx.beginPath();
+  ctx.arc(260, 190, 100, 0, Math.PI*2.0);
+  ctx.fill();
+
+  // 線の設定
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = 'rgb(0,0,255)';
+  ctx.lineWidth = 30;
+
+  // パスの描画
+  ctx.beginPath();
+  ctx.moveTo(60, 40);
+  ctx.lineTo(200, 40);
+  ctx.lineTo(200, 170);
+  ctx.lineTo(60, 170);
+  ctx.closePath();
+  ctx.stroke();
+})();
+
+</script>
+</body>
+</html>

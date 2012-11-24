@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="./thirdparty/jquery-1.8.3.min.js"></script>
+<script src="./thirdparty/modernizr.custom.24734.js"></script>
+<script>
+Modernizr.load({
+  test: Modernizr.file,
+  nope: function() {
+    alert('No file API !!');
+  },
+  // 完了後に呼ばれる
+  complete: function() {
+    // do something
+  }
+});
+
+</script>
+<title>Drag and Drop</title>
+<style>
+
+</style>
+</head>
+<body>
+
+<input type="file" id="selector" />
+
+<script>
+$('#selector').on('change', function() {
+  var fileList = this.files;
+
+  for (var i=0; i<fileList.length; i++) {
+    console.log('--------------');
+    console.log('name:', fileList[i].name);
+    console.log('type:', fileList[i].type);
+    console.log('size:', fileList[i].size);
+    console.log('updated:', fileList[i].lastModifiedDate);
+  }
+});
+</script>
+
+
+</body>
+</html>

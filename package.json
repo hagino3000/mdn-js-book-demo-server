@@ -1,0 +1,25 @@
+{
+  "name": "mdn-js-book-demo-server",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "2.5.9",
+    "ejs": "0.8.3",
+    "date-utils": "1.2.11"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "readmeFilename": "README.md",
+  "description": "Node Ninja\u001b$B$GF0$/$h$&$K:n$C$F$^$9!#\u001b(B",
+  "main": "server.js",
+  "devDependencies": {
+    "node-dev": "0.2.8",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hagino3000/mdn-js-book-demo-server.git"
+  },
+  "author": "hagino3000",
+  "license": "BSD"
+}

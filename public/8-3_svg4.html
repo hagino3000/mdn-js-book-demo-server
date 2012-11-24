@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SVG Sample</title>
+</head>
+<body>
+
+  <style>
+    svg text {
+      font-size: 20px;
+    }
+
+    .active circle{
+      fill: #F7A;
+      stroke: #A48;
+      stroke-width: 2;
+    }
+
+    .inactive circle{
+      fill: #aaa;
+      stroke: none;
+    }
+  </style>
+
+  <svg width="400" height="300" id="sample-svg">
+
+    <g class="active">
+      <text x="20" y="50">CSS class is active</text>
+      <circle cx="100" cy="150" r="80" />
+    </g>
+
+    <g class="inactive">
+      <text x="220" y="50">CSS class is inactive</text>
+      <circle cx="300" cy="150" r="80" />
+    </g>
+
+  </svg>
+
+</body>
+</html>

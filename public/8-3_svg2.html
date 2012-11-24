@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SVG Sample</title>
+</head>
+<body>
+  <!-- svg要素 -->
+  <svg width="400" height="300" id="sample-svg">
+
+    <text id="status" x="0" y="30" fill="#000" font-size="30">
+    Blue meter is Moving
+    </text>
+
+    <g id="meter">
+      <!-- 緑背景 -->
+      <rect x="0" y="40" width="400" fill="#0F0" height="80" />
+      <!-- 青色のメーター -->
+      <rect x="0" y="40" width="80" fill="#00F" height="80">
+        <!-- アニメーション定義、widthの値を動かす -->
+        <animate
+          dur="10s" 
+          attributeName="width" 
+          values="80; 400; 80;"
+          repeatCount="indefinite"
+        />
+      </rect>
+    </g>
+  </svg>
+
+  <script type="text/javascript">
+    var $ = document.getElementById.bind(document);
+
+    var meter = $('meter');
+    meter.addEventListener('mouseover', function() {
+        $('sample-svg').pauseAnimations();
+        $('status').textContent = 'Stopped';
+        $('status').setAttribute('fill', '#F00');
+    });
+    meter.addEventListener('mouseout', function() {
+        $('sample-svg').unpauseAnimations();
+        $('status').textContent = 'Blue meter is Moving';
+        $('status').setAttribute('fill', '#000');
+    });
+
+  </script>
+</body>
+</html>

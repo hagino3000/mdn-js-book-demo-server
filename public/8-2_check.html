@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="./thirdparty/modernizr.custom.24734.js"></script>
+<script>
+Modernizr.load({
+  // WebSocketのサポート状況をチェック
+  test: Modernizr.websockets,
+  // WebSocketをサポートしていない場合は次のファイルをロード
+  nope: ['./web_socket.js', 'swfobject.js'],
+  // 完了後に呼ばれる
+  complete: function() {
+    // do something
+  }
+});
+
+  alert('m4a:' + typeof(Modernizr.audio.m4a)); // maybe
+  alert('mp3:' + Modernizr.audio.mp3); // maybe
+  alert('ogg:' + Modernizr.audio.ogg); // probably
+  alert('wav:' + Modernizr.audio.wav); // probably
+</script>
+<title>Modernizr</title>
+</head>
+<body>
+</body>
+</html>
