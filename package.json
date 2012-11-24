@@ -14,7 +14,7 @@
   "description": "Node Ninja\u001b$B$GF0$/$h$&$K:n$C$F$^$9!#\u001b(B",
   "main": "server.js",
   "devDependencies": {
-    "node-dev": "0.2.8",
+    "node-dev": "0.2.8"
   },
   "repository": {
     "type": "git",
