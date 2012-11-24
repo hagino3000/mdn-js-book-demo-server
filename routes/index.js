@@ -1,3 +1,4 @@
+'use strict';
 
 // For XMLHttpRequest demo
 var xhr = require('./xhr_api');
@@ -30,11 +31,11 @@ var UPLOAD_DIR = require('path').normalize(__dirname + '/../upload/');
  */
 exports.upload = function(req, res) {
 
-  var fileName = (new Date() - 0) + '_' + fileName;
+  var fileName = (new Date() - 0) + '_' + req.headers['x-file-name'];
   var out = require('fs').createWriteStream(UPLOAD_DIR + fileName, { 
       flags: 'w', 
-      encoding: 'utf-8', 
-      mode: 0644 
+      encoding: 'utf-8',
+      mode: '0644'
   });
   
   var buffer = "";

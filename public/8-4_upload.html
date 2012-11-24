@@ -45,15 +45,72 @@ Modernizr.load({
     float: left;
     height: 150px;
     margin: 10px 10px 10px 0px;
+  }
 
+  #progress_monitor {
+    padding: 2px;
+  }
+
+  #progress_monitor > div {
+    height: 40px;
+    width: 100%;
+    background-color: #777;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    position: relative;
+    border-radius: 10px;
+  }
+
+  div.progress {
+    height: 40px;
+    position: absolute;
+    top: 0px; left: 0px;
+    z-index:5;
+    background-color: rgb(0, 200, 0);
+    border-radius: 10px;
+  }
+
+  div.label {
+    height: 40px;
+    width: 100%;
+    position: absolute;
+    top: 0px; left: 0px;
+    padding-top:10px;
+    padding-left: 15px;
+    color: #FFF;
+    font-weight: bold;
+    z-index: 10;
+    background-color: transparent;
+  }
+
+  div.sizelabel {
+    height: 40px;
+    width: 98%;
+    position: absolute;
+    top: 0px; left: 0px;
+    padding-top:10px;
+    color: #FFF;
+    text-align: right;
+    font-weight: bold;
+    z-index: 9;
+    background-color: transparent;
+  }
+
+  strong {
+    margin-bottom: 3px;
   }
 
 </style>
 </head>
 <body>
 
-<h1>Drop here some images</h1>
-<div id="droptarget">
+<h1>Drop to here to upload files</h1>
+  <div id="droptarget">
+</div>
+
+<br>
+<strong>Uploading files....</strong>
+<div id="progress_monitor">
 </div>
 
 <script>
@@ -89,19 +146,27 @@ $('#droptarget')
 });
 
 function upload(file) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/upload");
-    xhr.setRequestHeader("Cache-Control", "no-cache");
-    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    xhr.setRequestHeader("X-File-Name", file.name);
 
-    xhr.upload.onprogress = function(e) {
-      console.log(e.loaded + '/' + e.total);
-    }
-    xhr.upload.onload = function() {
-      console.log('Finished');
-    };
-    xhr.send(file);
+  var barWrapper = $('<div>')
+                      .append($('<div class="progress"></div>'))
+                      .append($('<div class="label"></div>').text(file.name))
+                      .append($('<div class="sizelabel"></div>').text('total ' + file.size + ' bytes'))
+
+  $('#progress_monitor').append(barWrapper);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/upload");
+  xhr.setRequestHeader("Cache-Control", "no-cache");
+  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  xhr.setRequestHeader("X-File-Name", file.name);
+
+  xhr.upload.onprogress = function(e) {
+    $('.progress', barWrapper).css('width', Math.floor(e.loaded/e.total*100) + '%');
+  }
+  xhr.upload.onload = function() {
+    console.log('Finished');
+  };
+  xhr.send(file);
 }
   
 </script>
