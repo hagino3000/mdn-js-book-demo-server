@@ -85,13 +85,13 @@ exports.upload = function(req, res) {
       flags: 'w', 
       encoding: 'utf-8',
       mode: '0644'
-  }));
-  
-  req.on('end', function() {
+  }))
+  .on('close', function() {
+    // 書き込み終了時にレスポンスを返す
     res.send('OK');
-  });
-
-  req.on('error', function() {
+  })
+  .on('error', function() {
+    // エラーが発生したらエラー500を返す
     res.send('NG', 500);
   });
 }
