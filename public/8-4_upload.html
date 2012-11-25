@@ -139,20 +139,21 @@ $('#droptarget')
   $(this).removeClass('dragover');
 
   var files = e.dataTransfer.files;
-
   for (var i=0; i<files.length; i++) {
     upload(files[i]);
   }
 });
 
+/**
+ * ファイルオブジェクトを受け取って、サーバーにアップロードする。
+ */
 function upload(file) {
-
-  var barWrapper = $('<div>')
-                      .append($('<div class="progress"></div>'))
-                      .append($('<div class="label"></div>').text(file.name))
-                      .append($('<div class="sizelabel"></div>').text('total ' + file.size + ' bytes'))
-
-  $('#progress_monitor').append(barWrapper);
+  // アップロード状況メーター
+  var bar = $('<div>')
+    .append($('<div class="progress"></div>'))
+    .append($('<div class="label"></div>').text(file.name))
+    .append($('<div class="sizelabel"></div>').text('total ' + file.size + ' bytes'))
+  $('#progress_monitor').append(bar);
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/upload");
@@ -161,10 +162,11 @@ function upload(file) {
   xhr.setRequestHeader("X-File-Name", file.name);
 
   xhr.upload.onprogress = function(e) {
-    $('.progress', barWrapper).css('width', Math.floor(e.loaded/e.total*100) + '%');
+    // メーターの更新
+    $('.progress', bar).css('width', Math.floor(e.loaded/e.total*100) + '%');
   }
   xhr.upload.onload = function() {
-    console.log('Finished');
+    // Finished
   };
   xhr.send(file);
 }
