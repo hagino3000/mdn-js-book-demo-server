@@ -80,6 +80,44 @@ function sendJSON_jQuery() {
   });
 }
 
+function getUser(userId) {
+  console.log('getUser');
+  $.ajax({
+    type: 'POST',
+    url: '/api/user',
+    contentType : 'application/json',
+    data: JSON.stringify({
+      method: 'get',
+      userId: userId
+    })
+  }).done(function(ret) {
+    console.dir(ret.result);
+  });
+}
+
+function addUser() {
+  console.log('addUser');
+  var newUser = {
+    name: 'hagino3000',
+    age: 99,
+    lang: ['JavaScript', 'Python', 'Perl']
+  }
+
+  $.ajax({
+    type: 'POST',
+    url: '/api/user',
+    contentType : 'application/json',
+    data: JSON.stringify({
+      method: 'add',
+      user: newUser
+    })
+  }).done(function(ret) {
+    console.info(ret);
+  });
+}
+
+
+
 </script>
 </head>
 <body>
@@ -87,15 +125,19 @@ function sendJSON_jQuery() {
   <h2>結果はコンソールに表示されます</h2>
 
   <div>
-  JSONの受信<br>
+  <h3>JSONの受信</h3>
   <input type="button" onclick="getJSON()" value="getJSON" /><br>
   <input type="button" onclick="getJSON_jQuery()" value="getJSON by jQuery" /><br>
   </div>
   <br>
   <div>
-  JSONの送信<br>
+  <h3>JSONの送信</h3>
   <input type="button" onclick="sendJSON()" value="sendJSON" /><br>
   <input type="button" onclick="sendJSON_jQuery()" value="sendJSON by jQuery" /><br>
   </div>
+
+  <h3>Demo</h3>
+  <input type="button" onclick="getUser(4)" value="getUser" /><br>
+  <input type="button" onclick="addUser()" value="addUser" /><br>
 
 </html>
