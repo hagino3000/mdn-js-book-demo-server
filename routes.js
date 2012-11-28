@@ -16,6 +16,11 @@ exports.api_server_time = function(req, res) {
  *
  */
 exports.api_get_json = function(req, res) {
+  var jsonData = {
+    aaa: 100,
+    bbb: 200,
+    foo: 'bar'
+  }
   res.header('Content-Type', 'application/json');
   res.send(jsonData);
 }
@@ -55,26 +60,6 @@ var UPLOAD_DIR = require('path').normalize(__dirname + '/upload/');
  * File upload
  *
  */
-//exports.upload = function(req, res) {
-//
-//  var fileName = (new Date() - 0) + '_' + req.headers['x-file-name'];
-//  var out = require('fs').createWriteStream(UPLOAD_DIR + fileName, { 
-//      flags: 'w', 
-//      encoding: 'utf-8',
-//      mode: '0644'
-//  });
-//  
-//  var buffer = "";
-//  req.on('data', function(data) {
-//    out.write(data);
-//  });
-//  req.on('end', function() {
-//    out.end();
-//    res.send('OK');
-//  });
-//}
-//
-
 exports.upload = function(req, res) {
 
   // ファイル名はタイムスタンプ + オリジナルのファイル名とする
