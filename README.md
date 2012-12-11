@@ -3,12 +3,16 @@
 
 ## Requirement
 
-node v0.6.11 (Same as Node Ninja equipment)
+node > v0.6.11
 
 ## Setup
 
   npm install
 
-## For Developer
+## Start 
 
   make run
+
+## Index Page
+
+Open http://localhost:3002/index.html in your browser.
