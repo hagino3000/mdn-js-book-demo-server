@@ -8,12 +8,14 @@
 
 ## Setup
 
-  npm install
+  $ git clone git@github.com:hagino3000/mdn-js-book-demo-server.git
+  $ cd mdn-js-book-demo-server
+  $ npm install
 
-## Start 
+## Start Server
 
-  make run
+  $ make run
 
-## Index Page
+## Show Index Page
 
-Open http://localhost:3002/index.html in your browser.
+After start server, open http://localhost:3002/index.html in your browser.
