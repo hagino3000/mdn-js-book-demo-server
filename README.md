@@ -8,13 +8,13 @@
 
 ## Setup
 
-  $ git clone git@github.com:hagino3000/mdn-js-book-demo-server.git
-  $ cd mdn-js-book-demo-server
-  $ npm install
+    $ git clone git@github.com:hagino3000/mdn-js-book-demo-server.git
+    $ cd mdn-js-book-demo-server
+    $ npm install
 
 ## Start Server
 
-  $ make run
+    $ make run
 
 ## Show Index Page
 
