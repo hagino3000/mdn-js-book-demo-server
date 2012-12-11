@@ -3,7 +3,8 @@
 
 ## Requirement
 
-node > v0.6.11
+- node > v0.6.11
+- redis
 
 ## Setup
 
