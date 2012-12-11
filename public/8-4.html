@@ -67,43 +67,55 @@ Modernizr.load({
     jQuery.event.props.push("dataTransfer");
 
     $(function() {
-
       /* ドラッグソースのイベント ***************************/
       $('#dragsource')
-      .on('dragstart', function(e) {
+      .on('dragstart', handleDragStart)
+      .on('dragend',    handleDragEnd);
+
+      function handleDragStart(e) {
         // Drop先へ渡すデータのセット
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/html', $(this).html());
-      })
-      .on('dragend', function(e) {
+      }
+
+      function handleDragEnd(e) {
         $(this).remove();
-      });
+      }
 
       /* ドロップターゲットのイベント ************************/
       $('#droptarget')
-      .on('dragover', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-      })
-      .on('dragleave', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        $(this).css('backgroundColor','transparent');
-      })
-      .on('dragenter', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        $(this).css('backgroundColor','#CCC');
-      })
-      .on('drop', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+      .on('dragover',  handleDragOver)
+      .on('dragenter', handleDragEnter)
+      .on('dragleave', handleDragLeave)
+      .on('drop',      handleDrop);
 
+      function handleDragOver(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      function handleDragEnter(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        // ドロップ可能な事を示すため背景色を変える
+        $(this).css('backgroundColor','#CCC');
+      }
+
+      function handleDragLeave(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        // 背景色を元に戻す
+        $(this).css('backgroundColor','transparent');
+      }
+
+      function handleDrop(e) {
+        e.preventDefault();
+        e.stopPropagation();
         // Drag元でセットしたデータの受け取り
         var data = e.dataTransfer.getData('text/html');
         $(this).append($('<div>').html(data));
         return false;
-      });
+      }
     });
 
   </script>

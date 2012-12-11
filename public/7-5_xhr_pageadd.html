@@ -10,48 +10,39 @@ $(function() {
   // 現在のスクロール位置から画面終りまでの距離を求める関数
   function calcScrollLeft() {
     var windowHeight = $(window).height(),
-        pageHeight = $(document).height(),
+        pageHeight   = $(document).height(),
         scrollOffset = $(document).scrollTop();
-
     return pageHeight - (scrollOffset + windowHeight);
   }
 
   // スクロール位置を定期的にチェックする関数
-  var timer;
   function startCheckTimer() {
-    timer = setInterval(function scrollCheck() {
-      // 次のコンテンツをロード開始する閾値(pixel)
-      // スクロール残りが200pxになったら次をロードする
-      var triggerMargin = 200;
-      if (triggerMargin > calcScrollLeft()) {
-        stopCheckTimer();
-        pageAdd(startCheckTimer);
+    var timer = setInterval(function() {
+      // スクロール残が300px未満になったらロード開始
+      if (300 > calcScrollLeft()) {
+        clearInterval(timer);
+        loadContents();
       }
     }, 500);
   }
 
-  // スクロール位置の監視を止める関数
-  function stopCheckTimer() {
-    clearInterval(timer);
-  }
-  
   // コンテンツの継ぎ足しを行なう関数
-  function pageAdd(callback) {
-
+  function loadContents() {
     //(1) 次にロードするコンテンツのURLを取得
-    var nextPage = $('.page :last').data('next-contents');
-
+    var url = $('.lazy :first').data('url');
     //(2) 次のロードすべきコンテンツが存在した場合
     //    コンテンツを取得する
-    nextPage && $.get(nextPage, function(html) {
-     // (3) 取得したHTMLを次の兄弟要素として挿入する
-     $('.page :last').after(html);
-     callback();
+    url && $.get(url, function(html) {
+     // (3) 取得したHTMLを挿入する
+     $('.lazy :first').append(html).removeClass('lazy');
+     // (4) スクロール位置の監視を再開
+     startCheckTimer();
     });
   }
 
   // スクロール位置の監視をスタート
   startCheckTimer();
+
 });
 </script>
 </head>
@@ -67,7 +58,7 @@ Navigations
 
 <div class="contents">
 
-<div class="page" data-next-contents="./comments.html">
+<div>
 <h1>Lorem ipsum dolor sit amet</h1>
 
 <div style="width:400px">
@@ -84,7 +75,18 @@ Navigations
 <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
 
 </div>
-</div><!-- end .page -->
+</div>
+
+<div class="lazy" data-url="./comments.html?id=x">
+  <!-- 記事へのコメントが後で挿入される -->
+</div>
+
+<div class="lazy" data-url="./forms.html?id=x">
+  <!-- 入力フォームが後で挿入される -->
+</div>
+
+
+
 </div><!-- end .contents -->
 
 <footer>This is footer</footer>
