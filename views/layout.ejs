@@ -4,14 +4,18 @@
   <head>
     <meta charset="UTF-8">
     <title><%= title %></title>
+    <link rel="stylesheet" href="/styles/bootstrap.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <style>
 body {
   margin:0;padding:0;
 }
-header {
-  padding: 10px;
-  
+h1 {
+  margin: 20px;
+}
+.navbar {
+  margin: 20px;
+
 }
 footer {
   height: 50px;
@@ -20,63 +24,89 @@ color: #FFF;
   padding: 10px;
 }
 .main {
-padding: 10px;
+padding: 0 20px 20px 20px;
 }
 </style>
 
 <script>
-// リンククリック時の動作を変更する
-$('ul.menu a').live('click', function(ev) {
-  // (1) デフォルトの動作をキャンセルする
-  ev.preventDefault();
-  // (2) ロケーションの変更
-  var nextUrl = $(this).attr('href');
-  history.pushState(null, null, nextUrl);
-  // (3) 画面の更新
-  $.ajax({
-    url: nextUrl,
-    headers: {
-      'X-PJAX': true
-    }
-  }).done(function(ret) {
-    $('.main').html(ret);
-  });
-});
+jQuery(function($) {
 
-// 履歴スタックがpopした時フック
-$(window).on('popstate', function(ev) {
-  console.log(ev);
-  // (1) 画面の更新
-  $.ajax({
-    url: location.pathname,
-    headers: {
-      'X-PJAX': true
-    }
-  }).done(function(ret) {
-    $('.main').html(ret);
+  if (history.pushState) {
+    // リンククリック時の動作を変更する
+    $('ul.nav a').on('click', function(ev) {
+      // (1) デフォルトの動作をキャンセルする
+      ev.preventDefault();
+      // (2) ロケーションの変更
+      var nextUrl = $(this).attr('href');
+      history.pushState(null, null, nextUrl);
+      // (3) 画面の更新
+      $.ajax({
+        url: nextUrl,
+        headers: {
+          'X-PJAX': true
+        }
+      }).done(function(ret) {
+        $('.main').html(ret);
+        setNavStyle();
+      });
+    });
+  }
+
+  // 履歴スタックがpopした時フック
+  $(window).on('popstate', function(ev) {
+    console.log(ev);
+    // (1) 画面の更新
+    $.ajax({
+      url: location.pathname,
+      headers: {
+        'X-PJAX': true
+      }
+    }).done(function(ret) {
+      $('.main').html(ret);
+      setNavStyle();
+    });
   });
+
+  function setNavStyle() {
+    $('.nav li a').each(function(i, el) {
+      var link = $(el);
+      console.info(location.pathname);
+      console.info(link.text().toLowerCase());
+      if (location.pathname.match(link.text().toLowerCase())) {
+        link.parent().addClass('active');
+      } else {
+        link.parent().removeClass('active');
+      }
+    });
+  }
+
 });
 </script>
 
   </head>
   <body>
-  <header>
-  PJAX Sample Pages<br>
-  <ul class="menu">
-    <li><a href="/pages/page1">Page1</a></li>
-    <li><a href="/pages/page2">Page2</a></li>
-    <li><a href="/pages/page3">Page3</a></li>
-  </ul>
-<input type="text" value="000">
-  </header>
+  <h1>PJAX Sample Page</h1>
+
+  <div class="conteiner">
+
+  <div class="navbar">
+      <div class="navbar-inner">
+        <ul class="nav">
+        <li><a href="/pages/page1">Page1</a></li>
+        <li><a href="/pages/page2">Page2</a></li>
+        <li><a href="/pages/page3">Page3</a></li>
+        </ul>
+      </div>
+  </div>
+  <div class="main" style="width:500px">
 
 <% } %>
 
-  <div class="main" style="width:500px">
   <%- body %>
-  </div>
 
 <% if (allPage) { %>
+  </div><!-- end/.main -->
+  </div><!-- end/.conteiner -->
 
   <footer>
   PJAX Sample Footer
