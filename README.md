@@ -13,7 +13,7 @@ Chapter7とChapter8のファイルアップロードのサンプルを動作さ�
 
 ### サーバーの動作に必要な物
 
-- Node.js v0.6.x
+- Node.js v0.8.x
 - Redis
 
 MacOS 10.8とUbuntu 12.04.1 LTSで動作確認をしています。
