@@ -1,6 +1,6 @@
 
 setup:
-	@install node modules
+	@echo install node modules
 	npm install
 
 run:
