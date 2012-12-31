@@ -1,18 +1,18 @@
 {
-  "name": "mdn-js-book-demo-server",
+  "name": "mdn-js-book-sample-codes",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "2.5.9",
-    "ejs": "0.8.3",
-    "date-utils": "1.2.11",
-    "redis": "~0.8.2"
+    "express": "=2.5.9",
+    "ejs": "=0.8.3",
+    "date-utils": "=1.2.11",
+    "redis": "=0.8.2"
   },
   "scripts": {
     "start": "node server.js"
   },
   "readmeFilename": "README.md",
-  "description": "Node Ninja\u001b$B$GF0$/$h$&$K:n$C$F$^$9!#\u001b(B",
+  "description": "Sample codes for MDN JavaScript book of chap7 and chap8",
   "main": "server.js",
   "devDependencies": {
     "node-dev": "0.2.8"
