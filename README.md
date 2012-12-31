@@ -1,6 +1,8 @@
 # MDN『すべての人に知っておいてほしいJavaScriptの基本原則』Chap7, Chap8 サンプルコード
 
-Chapter7とChapter8のサンプルコードです。
+「Chapter7 Ajaxを使った通信」と「Chapter8 HTML5と関連API」のサンプルコードです。
+
+[Amazon.co.jp:すべての人に知っておいてほしい JavaScriptの基本原則: 岩永 賢明, 勝間 亮, 嶋田 大輔, 土屋 勇人, 西林 孝, 比留間 和也, 吉田 雷: 本](http://www.amazon.co.jp/dp/4844363123)
 
 ## サンプルコード
 
